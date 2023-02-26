@@ -155,6 +155,18 @@ public class Doctor {
             nullable = false
     )
     private String registrationStamp;
+
+    @Column
+    private boolean isVerified;
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
     @ManyToMany(
             cascade = CascadeType.ALL
     )
@@ -221,6 +233,7 @@ public class Doctor {
         this.patientCount = patientCount;
         this.registrationNumber = registrationNumber;
         this.registrationStamp = registrationStamp;
+        this.isVerified = false;
     }
 
 
