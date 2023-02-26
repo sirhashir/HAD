@@ -41,7 +41,6 @@ public class Register {
         return doctorRegisterService.authDoctor(doctorRegisterRequest);
     }
     @PostMapping("/user")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity userRegister(@NotNull @RequestBody userRegisterRequest userRegisterRequest){
         return userRegisterService.registerUser(userRegisterRequest);
     }

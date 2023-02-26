@@ -33,12 +33,12 @@ public enum ApplicationUserRole {
         REPORT_READ
     )),
     ADMIN(Sets.newHashSet(
-            DOCTOR_READ,
-            DOCTOR_WRITE,
-            QUESTION_READ,
-            QUESTION_WRITE,
-            ARTICLE_READ,
-            ARTICLE_WRITE
+        DOCTOR_READ,
+        DOCTOR_WRITE,
+        QUESTION_READ,
+        QUESTION_WRITE,
+        ARTICLE_READ,
+        ARTICLE_WRITE
     ));
     private final Set<ApplicationUserPermission> permissions;
 
