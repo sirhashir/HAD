@@ -8,10 +8,7 @@ import com.example.had.service.userRegisterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -27,9 +24,13 @@ public class Register {
         this.doctorRegisterService = doctorRegisterService;
         this.userRegisterService = userRegisterService1;
     }
-
+    @GetMapping("/requests")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity requests(){
+        return doctorRegisterService.getAllRequests();
+    }
     @PostMapping("/doctor")
-    @PreAuthorize("hasRole('ROLE_DOCTOR')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity doctorRegister(@NotNull @RequestBody doctorRegisterRequest doctorRegisterRequest){
         return doctorRegisterService.registerDoctor(doctorRegisterRequest);
     }
@@ -43,10 +44,5 @@ public class Register {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity userRegister(@NotNull @RequestBody userRegisterRequest userRegisterRequest){
         return userRegisterService.registerUser(userRegisterRequest);
-    }
-    @GetMapping("/requests")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Doctor> requests(){
-        return doctorRegisterService.getAllRequests();
     }
 }

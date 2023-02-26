@@ -61,12 +61,14 @@ public class doctorRegisterService {
         }
     }
 
-    public List<Doctor> getAllRequests() {
+    public ResponseEntity getAllRequests() {
         try{
-            return doctorRepository.findByIsVerified(false);
+            List<Doctor> byIsVerified = doctorRepository.findByIsVerified(false);
+            System.out.println(byIsVerified);
+            return ResponseEntity.ok(byIsVerified);
         }catch (Exception e){
             System.out.println("Not able to find");
-            return null;
+            return ResponseEntity.noContent().build();
         }
     }
 }

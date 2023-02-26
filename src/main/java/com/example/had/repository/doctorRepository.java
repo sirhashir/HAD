@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public interface doctorRepository extends JpaRepository<Doctor, UUID> {
     @Query("select d from Doctor d where d.isVerified = ?1")
-    List<Doctor> findByIsVerified(@NonNull boolean isVerified);
+    List<Doctor> findByIsVerified(boolean isVerified);
     @Transactional
     @Modifying
     @Query("update Doctor d set d.isVerified = ?1 where upper(d.email) = upper(?2)")

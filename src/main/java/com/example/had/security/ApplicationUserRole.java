@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import static com.example.had.security.ApplicationUserPermission.*;
 
-
 public enum ApplicationUserRole {
 //    STUDENT(Sets.newHashSet()),
 //    ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_READ, STUDENT_WRITE)),
@@ -21,7 +20,8 @@ public enum ApplicationUserRole {
         ARTICLE_READ,
         CHAT_READ,
         CHAT_WRITE,
-        REPORT_READ
+        REPORT_READ,
+        REPORT_WRITE
     )),
     USER(Sets.newHashSet(
         DOCTOR_READ,
@@ -35,8 +35,6 @@ public enum ApplicationUserRole {
     ADMIN(Sets.newHashSet(
             DOCTOR_READ,
             DOCTOR_WRITE,
-            USER_READ,
-            USER_WRITE,
             QUESTION_READ,
             QUESTION_WRITE,
             ARTICLE_READ,
