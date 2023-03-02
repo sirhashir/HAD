@@ -155,7 +155,6 @@ public class Doctor {
             nullable = false
     )
     private String registrationStamp;
-
     @Column
     private boolean isVerified;
 
@@ -186,7 +185,6 @@ public class Doctor {
             )
     )
     private List<User> userList = new ArrayList<>();
-
 
     @OneToMany(
             mappedBy = "doctor",

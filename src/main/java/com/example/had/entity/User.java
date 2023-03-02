@@ -135,6 +135,18 @@ public class User {
             chat.setUser(null);
         }
     }
+    public void addDoctor(Doctor doctor){
+        this.setDoctor(doctor);
+        List<User> userList = doctor.getUserList();
+        userList.add(this);
+        doctor.setUserList(userList);
+    }
+    public void removeDoctor(Doctor doctor){
+        this.setDoctor(null);
+        List<User> userList = doctor.getUserList();
+        userList.remove(this);
+        doctor.setUserList(userList);
+    }
     public User() {
     }
 
