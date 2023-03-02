@@ -441,8 +441,8 @@ public class Doctor {
                 ", patientCount=" + patientCount +
                 ", registrationNumber='" + registrationNumber + '\'' +
                 ", registrationStamp='" + registrationStamp + '\'' +
-                ", userList=" + userList +
-                ", chatList=" + chatList +
+                ", userList=" + userList.size() +
+                ", chatList=" + chatList.size() +
                 '}';
     }
 }

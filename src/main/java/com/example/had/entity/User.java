@@ -299,9 +299,9 @@ public class User {
                 ", address='" + address + '\'' +
                 ", registrationStamp='" + registrationStamp + '\'' +
                 ", depressionSeverity=" + depressionSeverity +
-                ", doctorList=" + doctor +
-                ", chatList=" + chatList +
-                ", report=" + report +
+                ", doctorList=" + doctor.getEmail() +
+                ", chatList=" + chatList.size() +
+                ", report=" + report.toString() +
                 '}';
     }
 }

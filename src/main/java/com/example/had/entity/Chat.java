@@ -109,8 +109,8 @@ public class Chat {
                 "id='" + id + '\'' +
                 ", chatMessage='" + chatMessage + '\'' +
                 ", chatSentStamp='" + chatSentStamp + '\'' +
-                ", doctor=" + doctor +
-                ", user=" + user +
+                ", doctor=" + doctor.getEmail() +
+                ", user=" + user.getEmail() +
                 '}';
     }
 }

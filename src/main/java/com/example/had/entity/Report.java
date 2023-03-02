@@ -179,7 +179,7 @@ public class Report {
                 ", lastSessionCompleted='" + lastSessionCompleted + '\'' +
                 ", sessionCompleted=" + sessionCompleted +
                 ", weekCompleted=" + weekCompleted +
-                ", user=" + user +
+                ", user=" + user.getEmail() +
                 '}';
     }
 }

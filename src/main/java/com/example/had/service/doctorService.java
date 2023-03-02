@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,9 +28,17 @@ public class doctorService {
         this.requestRepository = requestRepository;
     }
 
-    public List<User> getRegisteredPatients(String doctorId) {
+    public List<User> getRegisteredPatients(UUID doctorId) {
         try {
-            return userRepository.findByDoctor_Id(UUID.fromString(doctorId));
+//            List<User> userList = doctorRepository.findById(doctorId).get().getUserList();
+            Doctor doctor = doctorRepository.findById(doctorId).get();
+            List<User> userList = doctor.getUserList();
+            for (User user: userList){
+                user.setReport(null);
+                user.setDoctor(null);
+                user.setChatList(null);
+            }
+            return userList;
         }catch (Exception e){
             System.out.println(e.getMessage());
             return null;
@@ -66,10 +75,30 @@ public class doctorService {
             doctorUserList.add(user);                           // add this user to doctor
             user.setDoctor(doctor);                             // add this doctor to user
             doctorRepository.save(doctor);                      // persist in database
+            userRepository.save(user);
 
             return ResponseEntity.ok("Request confirmed");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public User getPatient(UUID doctorId, UUID patientId) {
+        try
+        {
+//            Check if doctor is connected to user then send the user details else null
+            User user = userRepository.findById(patientId).get();
+            if (doctorRepository.findById(doctorId).get().getUserList().contains(user)) {
+                user.setDoctor(null);
+                user.setChatList(null);
+                user.setId(null);
+                user.setRegistrationStamp(null);
+                user.setAddress(null);
+                return user;
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
