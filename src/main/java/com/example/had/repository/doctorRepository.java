@@ -13,6 +13,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface doctorRepository extends JpaRepository<Doctor, UUID> {
+    @Transactional
+    @Modifying
+    @Query("update Doctor d set d.specialisation = ?1, d.contact = ?2, d.address = ?3, d.imageUrl = ?4, d.patientLimit = ?5 " +
+            "where d.id = ?6")
+    int updateSpecialisationAndContactAndAddressAndImageUrlAndPatientLimitById(String specialisation,
+                                                                               String contact,
+                                                                               String address,
+                                                                               String imageUrl,
+                                                                               int patientLimit,
+                                                                               UUID id);
+    @Query("select d from Doctor d where upper(d.email) = upper(?1)")
+    Doctor findByEmailIgnoreCase(String email);
     @Query("select d from Doctor d where d.userList = ?1")
     List<Doctor> findByUserList(User userList);
     @Query("select d from Doctor d where d.isVerified = ?1")

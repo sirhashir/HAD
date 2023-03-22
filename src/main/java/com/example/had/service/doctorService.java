@@ -1,11 +1,13 @@
 package com.example.had.service;
 
+import com.example.had.entity.Chat;
 import com.example.had.entity.Doctor;
 import com.example.had.entity.DoctorConnectionRequest;
 import com.example.had.entity.User;
 import com.example.had.repository.doctorConnectionRequestRepository;
 import com.example.had.repository.doctorRepository;
 import com.example.had.repository.userRepository;
+import com.example.had.request.doctorProfileBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +47,17 @@ public class doctorService {
         }
     }
 
-    public List<User> getRequests(UUID doctorId) {
+    public List<User> getRequests(UUID doctorId){
         try {
             List<DoctorConnectionRequest> requests = requestRepository.findByDoctor_Id(doctorId);
             List<User> userList = new ArrayList<>();
-            for (DoctorConnectionRequest request: requests)
-                userList.add(userRepository.findById(request.getUser().getId()).get());
+            for (DoctorConnectionRequest request: requests) {
+                User user = userRepository.findById(request.getUser().getId()).get();
+                user.setDoctor(null);
+                user.setChatList(null);
+                user.setReport(null);
+                userList.add(user);
+            }
             return userList;
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -100,5 +107,31 @@ public class doctorService {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public Doctor getProfile(UUID doctorId) {
+        try{
+            return doctorRepository.findById(doctorId).get();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean updateProfile(UUID doctorId, doctorProfileBody doctorProfileBody) {
+        try{
+            doctorRepository.updateSpecialisationAndContactAndAddressAndImageUrlAndPatientLimitById(
+                    doctorProfileBody.getSpecialization(),
+                    doctorProfileBody.getContact(),
+                    doctorProfileBody.getAddress(),
+                    doctorProfileBody.getImageUrl(),
+                    doctorProfileBody.getPatientLimit(),
+                    doctorId
+            );
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

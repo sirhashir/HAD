@@ -1,5 +1,7 @@
 package com.example.had.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -101,12 +103,14 @@ public class User {
     )
     private float depressionSeverity;
     @ManyToOne
+    @JsonBackReference
     private Doctor doctor;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonManagedReference
     private List<Chat> chatList = new ArrayList<>();
 
 
@@ -114,7 +118,24 @@ public class User {
             mappedBy = "user",
             orphanRemoval = true
     )
+    @JsonBackReference
     private Report report;
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Answers> answers = new ArrayList<>();
+
+    public List<Answers> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answers> answers) {
+        this.answers = answers;
+    }
+
     public void addReport(Report report){
         this.setReport(report);
         report.setUser(this);
@@ -146,6 +167,14 @@ public class User {
         List<User> userList = doctor.getUserList();
         userList.remove(this);
         doctor.setUserList(userList);
+    }
+    public void addAnswer(Answers answers){
+        this.answers.add(answers);
+        answers.setUser(this);
+    }
+    public void removeAnswer(Answers answers){
+        this.answers.remove(answers);
+        answers.setUser(null);
     }
     public User() {
     }

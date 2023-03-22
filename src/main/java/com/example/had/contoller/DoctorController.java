@@ -1,6 +1,8 @@
 package com.example.had.contoller;
 
+import com.example.had.entity.Doctor;
 import com.example.had.entity.User;
+import com.example.had.request.doctorProfileBody;
 import com.example.had.service.doctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,4 +50,32 @@ public class DoctorController {
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(patient);
     }
+    @GetMapping("/get/profile/{doctorId}")
+    public ResponseEntity<Doctor> getProfile(@PathVariable UUID doctorId){
+        Doctor profile = doctorService.getProfile(doctorId);
+        if (profile==null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(profile);
+    }
+    @PostMapping("/update/profile/{doctorId}")
+    public ResponseEntity<?> updateProfile(@PathVariable UUID doctorId,
+                                           @RequestBody doctorProfileBody doctorProfileBody){
+        boolean profile = doctorService.updateProfile(doctorId, doctorProfileBody);
+        if (profile)
+            return ResponseEntity.ok("Updated Successfully");
+        return ResponseEntity.unprocessableEntity().body("Not able to update");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

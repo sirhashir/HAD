@@ -52,7 +52,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -73,7 +72,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         response.setContentType("application/json");
 
         // Create a response object and write it to the response
-        LoginResponse loginResponse = new LoginResponse(token);
-        response.getWriter().write(new ObjectMapper().writeValueAsString(loginResponse));
+//        LoginResponse loginResponse = new LoginResponse(token);
+//        response.getWriter().write(new ObjectMapper().writeValueAsString(loginResponse));
     }
 }

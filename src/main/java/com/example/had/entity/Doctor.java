@@ -1,5 +1,7 @@
 package com.example.had.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -184,6 +186,7 @@ public class Doctor {
                     )
             )
     )
+    @JsonManagedReference
     private List<User> userList = new ArrayList<>();
 
     @OneToMany(
@@ -191,6 +194,7 @@ public class Doctor {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonManagedReference
     private List<Chat> chatList = new ArrayList<>();
 
 

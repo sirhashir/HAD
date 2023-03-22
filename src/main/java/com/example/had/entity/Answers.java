@@ -6,40 +6,20 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity(name = "QuestionBank")
-@Table(
-        name = "question_bank"
-)
-public class Question {
+@Entity(name = "Answers")
+@Table(name = "answers_master")
+public class Answers {
     @Id
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "UUID", strategy = "uuid4")
     @Type(type = "org.hibernate.type.UUIDCharType")
-    @Column(columnDefinition = "CHAR(36)", name = "question_id")
+    @Column(columnDefinition = "CHAR(36)", name = "answer_id")
     private UUID id;
-
-
-    @Column(
-            name = "question_string",
-            columnDefinition = "TEXT",
-            nullable = false
-    )
-    private String question;
-
-
-    @Column(
-            name = "question_type",
-            nullable = false
-    )
-    private String questionType;
-
-
     @Column(
             name = "option1",
             nullable = false
     )
     private String option1;
-
 
     @Column(
             name = "option2",
@@ -90,16 +70,6 @@ public class Question {
             precision = 2
     )
     private float value4;
-
-
-    @Column(
-            name = "correct_answer",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String correctAnswer;
-
-
     @Column(
             name = "week_number",
             nullable = false
@@ -113,24 +83,28 @@ public class Question {
     )
     private int sessionNumber;
 
-    public Question() {
-    }
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false,
+            referencedColumnName = "user_id",
+            foreignKey = @ForeignKey(name = "user_answer_fk")
+    )
+    private User user;
 
-    public Question(String question,
-                    String questionType,
-                    String option1,
-                    String option2,
-                    String option3,
-                    String option4,
-                    float value1,
-                    float value2,
-                    float value3,
-                    float value4,
-                    String correctAnswer,
-                    int weekNumber,
-                    int sessionNumber) {
-        this.question = question;
-        this.questionType = questionType;
+    public Answers(UUID id,
+                   String option1,
+                   String option2,
+                   String option3,
+                   String option4,
+                   float value1,
+                   float value2,
+                   float value3,
+                   float value4,
+                   int weekNumber,
+                   int sessionNumber,
+                   User user) {
+        this.id = id;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
@@ -139,7 +113,66 @@ public class Question {
         this.value2 = value2;
         this.value3 = value3;
         this.value4 = value4;
-        this.correctAnswer = correctAnswer;
+        this.weekNumber = weekNumber;
+        this.sessionNumber = sessionNumber;
+        this.user = user;
+    }
+
+    public Answers(String option1,
+                   String option2,
+                   String option3,
+                   String option4,
+                   float value1,
+                   float value2,
+                   float value3,
+                   float value4,
+                   int weekNumber,
+                   int sessionNumber,
+                   User user) {
+
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.value3 = value3;
+        this.value4 = value4;
+        this.weekNumber = weekNumber;
+        this.sessionNumber = sessionNumber;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public Answers() {
+    }
+
+    public Answers(UUID id,
+                   String option1,
+                   String option2,
+                   String option3,
+                   String option4,
+                   float value1,
+                   float value2,
+                   float value3,
+                   float value4,
+                   int weekNumber,
+                   int sessionNumber) {
+        this.id = id;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.value3 = value3;
+        this.value4 = value4;
         this.weekNumber = weekNumber;
         this.sessionNumber = sessionNumber;
     }
@@ -150,22 +183,6 @@ public class Question {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(String questionType) {
-        this.questionType = questionType;
     }
 
     public String getOption1() {
@@ -232,14 +249,6 @@ public class Question {
         this.value4 = value4;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-
     public int getWeekNumber() {
         return weekNumber;
     }
@@ -258,10 +267,8 @@ public class Question {
 
     @Override
     public String toString() {
-        return "question{" +
-                "id='" + id + '\'' +
-                ", question='" + question + '\'' +
-                ", questionType='" + questionType + '\'' +
+        return "Answers{" +
+                "id=" + id +
                 ", option1='" + option1 + '\'' +
                 ", option2='" + option2 + '\'' +
                 ", option3='" + option3 + '\'' +
@@ -270,7 +277,6 @@ public class Question {
                 ", value2=" + value2 +
                 ", value3=" + value3 +
                 ", value4=" + value4 +
-                ", correctAnswer='" + correctAnswer + '\'' +
                 ", weekNumber=" + weekNumber +
                 ", sessionNumber=" + sessionNumber +
                 '}';

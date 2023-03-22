@@ -53,13 +53,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .configurationSource(corsConfigurationSource())
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // The session creation policy is set to SessionCreationPolicy.STATELESS, which means that the application will not create or use HTTP sessions to store session data. Instead, the application will rely on each request to contain all the necessary information to authenticate and authorize the user.
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/register/doctor").permitAll()
                 .antMatchers("/register/user").permitAll()
+                .antMatchers("/connection_check").permitAll()
                 .anyRequest()
                 .authenticated();
     }

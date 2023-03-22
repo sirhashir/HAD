@@ -15,10 +15,7 @@ public class Report {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "UUID", strategy = "uuid4")
     @Type(type = "org.hibernate.type.UUIDCharType")
-    @Column(
-            name = "report_id",
-            length = 12
-    )
+    @Column(columnDefinition = "CHAR(36)", name = "report_id")
     private UUID id;
 
 
