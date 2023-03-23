@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface doctorRepository extends JpaRepository<Doctor, UUID> {
+    @Query("select d from Doctor d where d.patientLimit > d.patientCount and d.isVerified = true ")
+    List<Doctor> findByPatientLimitAndPatientCount();
     @Transactional
     @Modifying
     @Query("update Doctor d set d.specialisation = ?1, d.contact = ?2, d.address = ?3, d.imageUrl = ?4, d.patientLimit = ?5 " +

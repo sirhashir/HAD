@@ -4,6 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "Auth")
@@ -35,14 +38,27 @@ public class Auth {
             nullable = false
     )
     private String role;
+    @Column(
+            name = "last_login"
+    )
+    private String lastLogin;
 
     public Auth() {
     }
 
-    public Auth(String username, String password, String role) {
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public Auth(String username, String password, String role, String lastLogin) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.lastLogin = lastLogin;
     }
 
     public UUID getId() {

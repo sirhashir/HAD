@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Service
@@ -24,9 +25,12 @@ public class userRegisterService {
 
     public ResponseEntity registerUser(userRegisterRequest userRegisterRequest) {
         try {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             authRepository.save(new Auth(userRegisterRequest.getEmail(),
                     userRegisterRequest.getPassword(),
-                    "USER"));
+                    "USER",
+                    timestamp.toString()
+                    ));
 
             userRepository.save(new User(
                     userRegisterRequest.getEmail(),

@@ -1,9 +1,10 @@
 package com.example.had.service;
 
-import com.example.had.entity.Chat;
+import com.example.had.entity.Auth;
 import com.example.had.entity.Doctor;
 import com.example.had.entity.DoctorConnectionRequest;
 import com.example.had.entity.User;
+import com.example.had.repository.authRepository;
 import com.example.had.repository.doctorConnectionRequestRepository;
 import com.example.had.repository.doctorRepository;
 import com.example.had.repository.userRepository;
@@ -11,34 +12,42 @@ import com.example.had.request.doctorProfileBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class doctorService {
     private final userRepository userRepository;
+    private final authRepository authRepository;
     private final doctorRepository doctorRepository;
     private final doctorConnectionRequestRepository requestRepository;
 
     public doctorService(userRepository userRepository,
-                         doctorRepository doctorRepository,
+                         authRepository authRepository, doctorRepository doctorRepository,
                          doctorConnectionRequestRepository requestRepository) {
         this.userRepository = userRepository;
+        this.authRepository = authRepository;
         this.doctorRepository = doctorRepository;
         this.requestRepository = requestRepository;
     }
 
     public List<User> getRegisteredPatients(UUID doctorId) {
         try {
-//            List<User> userList = doctorRepository.findById(doctorId).get().getUserList();
             Doctor doctor = doctorRepository.findById(doctorId).get();
             List<User> userList = doctor.getUserList();
             for (User user: userList){
                 user.setReport(null);
                 user.setDoctor(null);
                 user.setChatList(null);
+                Auth auth = authRepository.findFirstByUsername(user.getEmail());
+                if (Timestamp.valueOf(auth.getLastLogin()).compareTo(new Timestamp(System.currentTimeMillis())) > 5){
+                    user.setActive(false);
+                }
+                else {
+                    user.setActive(true);
+                }
             }
             return userList;
         }catch (Exception e){
@@ -53,9 +62,9 @@ public class doctorService {
             List<User> userList = new ArrayList<>();
             for (DoctorConnectionRequest request: requests) {
                 User user = userRepository.findById(request.getUser().getId()).get();
-                user.setDoctor(null);
-                user.setChatList(null);
-                user.setReport(null);
+//                user.setDoctor(null);
+//                user.setChatList(null);
+//                user.setReport(null);
                 userList.add(user);
             }
             return userList;
@@ -133,5 +142,22 @@ public class doctorService {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public List<Doctor> getAllDoctors() {
+        try {
+            List<Doctor> doctorList = doctorRepository.findByPatientLimitAndPatientCount();
+            for (Doctor doctor : doctorList) {
+                doctor.setUserList(null);
+                doctor.setPatientLimit(0);
+                doctor.setId(null);
+                doctor.setPatientCount(0);
+                doctor.setChatList(null);
+            }
+            return doctorList;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

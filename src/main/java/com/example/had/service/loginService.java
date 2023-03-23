@@ -9,6 +9,9 @@ import com.example.had.request.loginRequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Service
@@ -26,9 +29,14 @@ public class loginService {
     }
 
     public ResponseEntity<?> getUserByLogin(loginRequestBody loginRequestBody) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String role = authRepository.
                         findFirstByUsernameAndPassword(loginRequestBody.getUsername(), loginRequestBody.getPassword()).
                         getRole();
+
+        authRepository.updateLastLoginByUsername(timestamp.toString(), loginRequestBody.getUsername());
+
+
         if (Objects.equals(role, "DOCTOR")){
             Doctor doctor = doctorRepository.findByEmailIgnoreCase(loginRequestBody.getUsername());
             return ResponseEntity.ok(doctor);

@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,20 @@ public class User {
             name = "depression_severity"
     )
     private float depressionSeverity;
+
+    public Boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    @Column(
+            name = "is_active"
+    )
+    private Boolean isActive; // a user is active if last login was 5 days or less
+
     @ManyToOne
     @JsonBackReference
     private Doctor doctor;

@@ -2,6 +2,7 @@ package com.example.had.contoller;
 
 import com.example.had.entity.Question;
 import com.example.had.entity.User;
+import com.example.had.request.userProfileUpdateRequest;
 import com.example.had.service.AnswerService;
 import com.example.had.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,14 @@ public class UserController {
         User profile = userService.getProfile(patientId);
         if (profile != null)
             return ResponseEntity.ok(profile);
+        return ResponseEntity.notFound().build();
+    }
+    @PostMapping("/update/profile/{patientId}")
+    public ResponseEntity<?> updateProfile(@PathVariable UUID patientId,
+                                           @RequestBody userProfileUpdateRequest updateRequest){
+        boolean updated = userService.updateProfile(patientId,updateRequest);
+        if (updated)
+            return ResponseEntity.ok("profile updated successfully");
         return ResponseEntity.notFound().build();
     }
 }

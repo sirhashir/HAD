@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.example.had.repository.authRepository;
 
 import javax.print.Doc;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -48,11 +51,14 @@ public class doctorRegisterService {
 
     public ResponseEntity authDoctor(doctorRegisterRequest doctorRegisterRequest) {
         try{
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             doctorRepository.updateIsVerifiedByEmailIgnoreCase(true,doctorRegisterRequest.getEmail());
             authRepository.save(
                     new Auth(doctorRegisterRequest.getEmail()
                     ,doctorRegisterRequest.getPassword(),
-                            "DOCTOR")
+                            "DOCTOR",
+                            timestamp.toString()
+                    )
             );
             return ResponseEntity.ok("Registered Successfully");
         }catch (Exception e){

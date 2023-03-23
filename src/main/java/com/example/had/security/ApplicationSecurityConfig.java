@@ -61,6 +61,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register/doctor").permitAll()
                 .antMatchers("/register/user").permitAll()
                 .antMatchers("/connection_check").permitAll()
+                .antMatchers("/get/doctors").permitAll()
+                .antMatchers("/logon").permitAll()
                 .anyRequest()
                 .authenticated();
     }
