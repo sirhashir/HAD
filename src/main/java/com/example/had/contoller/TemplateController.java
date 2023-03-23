@@ -27,7 +27,9 @@ public class TemplateController {
     }
 
     @PostMapping("logon")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getLogin(@RequestBody loginRequestBody loginRequestBody) {
+
         return loginService.getUserByLogin(loginRequestBody);
     }
     @GetMapping("connection_check")
