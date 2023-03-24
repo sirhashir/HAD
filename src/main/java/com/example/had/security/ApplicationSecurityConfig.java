@@ -4,9 +4,8 @@ import com.example.had.auth.ApplicationUserService;
 import com.example.had.jwt.JwtConfig;
 import com.example.had.jwt.JwtTokenVerifier;
 import com.example.had.jwt.JwtUsernameAndPasswordAuthenticationFilter;
-import org.apache.catalina.filters.CorsFilter;
+import com.example.had.service.loginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -62,9 +61,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register/user").permitAll()
                 .antMatchers("/connection_check").permitAll()
                 .antMatchers("/get/doctors").permitAll()
-                .antMatchers("/logon").permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/")
+                .logoutSuccessUrl("/custom-logout")
+                .permitAll();
     }
 
     @Override

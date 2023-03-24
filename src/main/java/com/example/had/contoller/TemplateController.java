@@ -5,19 +5,20 @@ import com.example.had.entity.Doctor;
 import com.example.had.request.loginRequestBody;
 import com.example.had.service.doctorService;
 import com.example.had.service.loginService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class TemplateController {
+    public static final Logger logger = LogManager.getLogger(TemplateController.class);
     private final loginService loginService;
     private final doctorService doctorService;
 
@@ -26,13 +27,12 @@ public class TemplateController {
         this.doctorService = doctorService;
     }
 
-    @PostMapping("logon")
-    @PreAuthorize("permitAll()")
-    public ResponseEntity<?> getLogin(@RequestBody loginRequestBody loginRequestBody) {
-
-        return loginService.getUserByLogin(loginRequestBody);
+    @PostMapping("custom-login/{username}/{password}")
+    public ResponseEntity<?> getLogin(@PathVariable String username, @PathVariable String password) {
+        logger.info("Inside custom login ");
+        return loginService.getUserByLogin(username,password);
     }
-    @GetMapping("connection_check")
+    @GetMapping("custom-logout")
     public String connectionCheck(){
         return "courses";
     }
