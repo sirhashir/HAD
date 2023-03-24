@@ -2,17 +2,21 @@ package com.example.had.contoller;
 
 import com.example.had.entity.Question;
 import com.example.had.entity.User;
+import com.example.had.request.loginRequestBody;
 import com.example.had.request.userProfileUpdateRequest;
 import com.example.had.service.AnswerService;
 import com.example.had.service.UserService;
+import com.example.had.service.loginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.example.had.request.answersBody;
-import javax.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.UUID;
+
+import static com.example.had.contoller.TemplateController.logger;
 
 @Controller
 @RequestMapping("/user")
@@ -20,10 +24,13 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
     private final AnswerService answerService;
+    private final loginService loginService;
 
-    public UserController(UserService userService, AnswerService answerService) {
+
+    public UserController(UserService userService, AnswerService answerService, loginService loginService) {
         this.userService = userService;
         this.answerService = answerService;
+        this.loginService = loginService;
     }
     @GetMapping("/get/session/{weekNumber}/{sessionNumber}")
     public List<Question> getInitialQuestions(
@@ -58,5 +65,10 @@ public class UserController {
         if (updated)
             return ResponseEntity.ok("profile updated successfully");
         return ResponseEntity.notFound().build();
+    }
+    @PostMapping("/login-timestamp")
+    public ResponseEntity<?> getLogin(@RequestBody loginRequestBody loginRequestBody) {
+        logger.info("Inside custom login ");
+        return loginService.getUserByLogin(loginRequestBody.getUsername(), loginRequestBody.getPassword());
     }
 }

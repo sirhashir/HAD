@@ -17,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
+@PreAuthorize("permitAll()")
 public class TemplateController {
     public static final Logger logger = LogManager.getLogger(TemplateController.class);
     private final loginService loginService;
@@ -25,12 +26,6 @@ public class TemplateController {
     public TemplateController(loginService loginService, doctorService doctorService) {
         this.loginService = loginService;
         this.doctorService = doctorService;
-    }
-
-    @PostMapping("custom-login/{username}/{password}")
-    public ResponseEntity<?> getLogin(@PathVariable String username, @PathVariable String password) {
-        logger.info("Inside custom login ");
-        return loginService.getUserByLogin(username,password);
     }
     @GetMapping("custom-logout")
     public String connectionCheck(){
