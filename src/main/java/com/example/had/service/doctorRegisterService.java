@@ -5,22 +5,22 @@ import com.example.had.entity.Doctor;
 import com.example.had.repository.doctorRepository;
 import com.example.had.request.doctorRegisterRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.had.repository.authRepository;
 
-import javax.print.Doc;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
 public class doctorRegisterService {
     private final authRepository authRepository;
     private final doctorRepository doctorRepository;
-    public doctorRegisterService(authRepository authRepository, doctorRepository doctorRepository) {
+    private final PasswordEncoder passwordEncoder;
+    public doctorRegisterService(authRepository authRepository, doctorRepository doctorRepository, PasswordEncoder passwordEncoder) {
         this.authRepository = authRepository;
         this.doctorRepository = doctorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public ResponseEntity registerDoctor(doctorRegisterRequest doctorRegisterRequest) {
@@ -55,7 +55,7 @@ public class doctorRegisterService {
             doctorRepository.updateIsVerifiedByEmailIgnoreCase(true,doctorRegisterRequest.getEmail());
             authRepository.save(
                     new Auth(doctorRegisterRequest.getEmail()
-                    ,doctorRegisterRequest.getPassword(),
+                    , passwordEncoder.encode(doctorRegisterRequest.getPassword()),
                             "DOCTOR",
                             timestamp.toString()
                     )

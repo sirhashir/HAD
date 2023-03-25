@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 import java.util.UUID;
 @Repository("auth")
 public interface authRepository extends JpaRepository<Auth, UUID> {
+    @Query("select a from Auth a where a.username = ?1")
+    Auth findByUsername(String username);
     @Transactional
     @Modifying
     @Query("update Auth a set a.lastLogin = ?1 where a.username = ?2")
