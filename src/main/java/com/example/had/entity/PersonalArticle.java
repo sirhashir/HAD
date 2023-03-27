@@ -39,7 +39,7 @@ public class PersonalArticle
     @ManyToOne
     @JoinColumn(
             name = "doctor_id",
-            referencedColumnName = "id",
+            referencedColumnName = "doctor_id",
             foreignKey = @ForeignKey(
                     name = "doctor_id_fk"
             )
@@ -54,7 +54,7 @@ public class PersonalArticle
     )
     @JoinColumn(
             name = "user_id",
-            referencedColumnName = "id",
+            referencedColumnName = "user_id",
             foreignKey = @ForeignKey(
                     name = "user_id_fk"
             )
