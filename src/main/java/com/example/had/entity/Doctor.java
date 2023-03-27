@@ -198,6 +198,14 @@ public class Doctor {
     private List<Chat> chatList = new ArrayList<>();
 
 
+    @OneToMany(
+            mappedBy = "doctor",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    private List<PersonalArticle> personalArticles = new ArrayList<>();
+
+
     public Doctor() {
     }
 
@@ -421,6 +429,24 @@ public class Doctor {
         if(this.userList.contains(user)){
             this.userList.remove(user);
             user.setDoctor(null);
+        }
+    }
+
+    public void addPersonalArticle(PersonalArticle personalArticle)
+    {
+        if(!this.personalArticles.contains(personalArticle))
+        {
+            this.personalArticles.add(personalArticle);
+            personalArticle.setDoctor(this);
+        }
+    }
+
+    public void removePersonalArticle(PersonalArticle personalArticle)
+    {
+        if(this.personalArticles.contains(personalArticle))
+        {
+            this.personalArticles.remove(personalArticle);
+            personalArticle.setDoctor(null);
         }
     }
 

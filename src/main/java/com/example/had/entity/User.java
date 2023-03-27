@@ -147,6 +147,16 @@ public class User {
         return answers;
     }
 
+
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true
+    )
+    private PersonalArticle personalArticle;
+
+
+
+
     public void setAnswers(List<Answers> answers) {
         this.answers = answers;
     }
@@ -191,6 +201,9 @@ public class User {
         this.answers.remove(answers);
         answers.setUser(null);
     }
+
+
+
     public User() {
     }
 
