@@ -92,12 +92,7 @@ public class Question {
     private float value4;
 
 
-    @Column(
-            name = "correct_answer",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String correctAnswer;
+
 
 
     @Column(
@@ -126,7 +121,6 @@ public class Question {
                     float value2,
                     float value3,
                     float value4,
-                    String correctAnswer,
                     int weekNumber,
                     int sessionNumber) {
         this.question = question;
@@ -139,7 +133,6 @@ public class Question {
         this.value2 = value2;
         this.value3 = value3;
         this.value4 = value4;
-        this.correctAnswer = correctAnswer;
         this.weekNumber = weekNumber;
         this.sessionNumber = sessionNumber;
     }
@@ -232,13 +225,13 @@ public class Question {
         this.value4 = value4;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
+//    public String getCorrectAnswer() {
+//        return correctAnswer;
+//    }
+//
+//    public void setCorrectAnswer(String correctAnswer) {
+//        this.correctAnswer = correctAnswer;
+//    }
 
     public int getWeekNumber() {
         return weekNumber;
@@ -270,7 +263,6 @@ public class Question {
                 ", value2=" + value2 +
                 ", value3=" + value3 +
                 ", value4=" + value4 +
-                ", correctAnswer='" + correctAnswer + '\'' +
                 ", weekNumber=" + weekNumber +
                 ", sessionNumber=" + sessionNumber +
                 '}';

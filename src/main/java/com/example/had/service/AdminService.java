@@ -27,7 +27,6 @@ public class AdminService {
                             question.getValue2(),
                             question.getValue3(),
                             question.getValue4(),
-                            question.getCorrectAnswer(),
                             question.getWeekNumber(),
                             question.getSessionNumber()
                     )

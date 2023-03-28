@@ -22,26 +22,34 @@ public class Auth {
             name = "user_id"
     )
     private UUID id;
+
+
     @Column(
             name = "username",
             nullable = false
     )
     private String username;
 
+
     @Column(
             name = "password",
             nullable = false
     )
     private String password;
+
+
     @Column(
             name = "role",
             nullable = false
     )
     private String role;
+
+
     @Column(
             name = "last_login"
     )
     private String lastLogin;
+
 
     public Auth() {
     }

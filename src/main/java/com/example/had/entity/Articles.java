@@ -61,22 +61,29 @@ public class Articles {
     )
     private String articleLink;
 
-
     @Column(
-            name = "article_data",
+            name = "article_title",
             nullable = false
     )
-    private String articleData;
+    private String articleTitle;
+
+
+//    @Column(
+//            name = "article_data",
+//            nullable = false
+//    )
+//    private String articleData;
 
     public Articles() {
     }
 
-    public Articles(String articleType, String articleWeek, String articleSession, String articleLink, String articleData) {
+
+    public Articles(String articleType, String articleWeek, String articleSession, String articleLink, String articleTitle) {
         this.articleType = articleType;
         this.articleWeek = articleWeek;
         this.articleSession = articleSession;
         this.articleLink = articleLink;
-        this.articleData = articleData;
+        this.articleTitle = articleTitle;
     }
 
     public UUID getId() {
@@ -119,23 +126,24 @@ public class Articles {
         this.articleLink = articleLink;
     }
 
-    public String getArticleData() {
-        return articleData;
+    public String getArticleTitle() {
+        return articleTitle;
     }
 
-    public void setArticleData(String articleData) {
-        this.articleData = articleData;
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
     }
+
 
     @Override
     public String toString() {
-        return "articles{" +
-                "id='" + id + '\'' +
+        return "Articles{" +
+                "id=" + id +
                 ", articleType='" + articleType + '\'' +
                 ", articleWeek='" + articleWeek + '\'' +
                 ", articleSession='" + articleSession + '\'' +
                 ", articleLink='" + articleLink + '\'' +
-                ", articleData='" + articleData + '\'' +
+                ", articleTitle='" + articleTitle + '\'' +
                 '}';
     }
 }

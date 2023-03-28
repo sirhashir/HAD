@@ -206,6 +206,7 @@ public class Doctor {
     private List<PersonalArticle> personalArticles = new ArrayList<>();
 
 
+
     public Doctor() {
     }
 
@@ -401,6 +402,14 @@ public class Doctor {
 
     public List<Chat> getChatList() {
         return chatList;
+    }
+
+    public List<PersonalArticle> getPersonalArticles() {
+        return personalArticles;
+    }
+
+    public void setPersonalArticles(List<PersonalArticle> personalArticles) {
+        this.personalArticles = personalArticles;
     }
 
     public void setChatList(List<Chat> chatList) {

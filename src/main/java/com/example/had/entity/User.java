@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +42,7 @@ public class User {
     @Column(
             name = "fname",
             nullable = false,
-            length = 15
+            length = 20
     )
     private String firstName;
 
@@ -48,7 +50,7 @@ public class User {
     @Column(
             name = "lname",
             nullable = false,
-            length = 15
+            length = 20
     )
     private String lastName;
 
@@ -56,7 +58,7 @@ public class User {
     @Column(
             name = "mname",
             nullable = false,
-            length = 15
+            length = 20
     )
     private String middleName;
 
@@ -73,7 +75,7 @@ public class User {
             name = "date_of_birth",
             nullable = false
     )
-    private LocalDate dob;
+    private Date dob;
 
 
     @Column(
@@ -102,6 +104,7 @@ public class User {
     @Column(
             name = "depression_severity"
     )
+    @Range(min = 1, max = 100)
     private float depressionSeverity;
 
     public Boolean isActive() {
@@ -154,8 +157,17 @@ public class User {
     )
     private PersonalArticle personalArticle;
 
+    public Boolean getActive() {
+        return isActive;
+    }
 
+    public PersonalArticle getPersonalArticle() {
+        return personalArticle;
+    }
 
+    public void setPersonalArticle(PersonalArticle personalArticle) {
+        this.personalArticle = personalArticle;
+    }
 
     public void setAnswers(List<Answers> answers) {
         this.answers = answers;
@@ -212,7 +224,7 @@ public class User {
                 String lastName,
                 String middleName,
                 String gender,
-                LocalDate dob,
+                Date dob,
                 String contact,
                 String address,
                 String registrationStamp,
@@ -278,11 +290,11 @@ public class User {
         this.gender = gender;
     }
 
-    public LocalDate getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 

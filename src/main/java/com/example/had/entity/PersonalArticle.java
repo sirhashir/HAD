@@ -69,6 +69,12 @@ public class PersonalArticle
     )
     private String articleUrl;
 
+    @Column(
+            name = "article_title",
+            nullable = false
+    )
+    private String articleTitle;
+
     public PersonalArticle() {
 
     }
@@ -129,18 +135,38 @@ public class PersonalArticle
         this.articleUrl = articleUrl;
     }
 
-    public PersonalArticle(String articleType, String articleAuthor, String articleThumbnail, Doctor doctor, User user, String articleUrl) {
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
+
+
+
+
+
+    public PersonalArticle(String articleType,
+                           String articleAuthor,
+                           String articleThumbnail,
+                           Doctor doctor,
+                           User user,
+                           String articleUrl,
+                           String articleTitle) {
         this.articleType = articleType;
         this.articleAuthor = articleAuthor;
         this.articleThumbnail = articleThumbnail;
         this.doctor = doctor;
         this.user = user;
         this.articleUrl = articleUrl;
+        this.articleTitle = articleTitle;
     }
 
     @Override
     public String toString() {
-        return "Personal_Article{" +
+        return "PersonalArticle{" +
                 "id=" + id +
                 ", articleType='" + articleType + '\'' +
                 ", articleAuthor='" + articleAuthor + '\'' +
@@ -148,6 +174,7 @@ public class PersonalArticle
                 ", doctor=" + doctor +
                 ", user=" + user +
                 ", articleUrl='" + articleUrl + '\'' +
+                ", articleTitle='" + articleTitle + '\'' +
                 '}';
     }
 }
