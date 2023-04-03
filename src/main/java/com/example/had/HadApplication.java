@@ -1,6 +1,8 @@
 package com.example.had;
 
+import com.example.had.sample.Actualdata;
 import com.example.had.sample.Dummydata;
+import com.example.had.sample.PreData;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,11 +16,16 @@ public class HadApplication {
 
 
     private Dummydata dummydata;
+    private Actualdata actualdata;
+    private PreData preData;
 
-    public HadApplication(Dummydata dummydata)
+    public HadApplication(Dummydata dummydata, Actualdata actualdata,PreData preData)
     {
         this.dummydata = dummydata;
+        this.actualdata = actualdata;
+        this.preData = preData;
     }
+
 
    public static void main(String[] args)
    {
@@ -26,9 +33,12 @@ public class HadApplication {
    }
 
     @Bean
-    public CommandLineRunner commandLineRunner() {
+    public CommandLineRunner commandLineRunner()
+    {
         return args -> {
-            dummydata.generateData();
+            //actualdata.generateData();
+            //dummydata.generateData();
+//            preData.generateData();
         };
     }
 

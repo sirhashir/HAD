@@ -1,10 +1,12 @@
 package com.example.had.contoller;
 
+import com.example.had.entity.PrepopulatedArticle;
 import com.example.had.entity.Question;
 import com.example.had.entity.User;
 import com.example.had.request.loginRequestBody;
 import com.example.had.request.userProfileUpdateRequest;
 import com.example.had.service.AnswerService;
+import com.example.had.service.PrepopulatedArticleService;
 import com.example.had.service.UserService;
 import com.example.had.service.loginService;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +27,14 @@ public class UserController {
     private final UserService userService;
     private final AnswerService answerService;
     private final loginService loginService;
+    private final PrepopulatedArticleService prepopulatedArticleService;
 
 
-    public UserController(UserService userService, AnswerService answerService, loginService loginService) {
+    public UserController(UserService userService, AnswerService answerService, loginService loginService, PrepopulatedArticleService prepopulatedArticleService) {
         this.userService = userService;
         this.answerService = answerService;
         this.loginService = loginService;
+        this.prepopulatedArticleService = prepopulatedArticleService;
     }
     @GetMapping("/get/session/{weekNumber}/{sessionNumber}")
     public List<Question> getInitialQuestions(

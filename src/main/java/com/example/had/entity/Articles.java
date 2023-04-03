@@ -78,7 +78,11 @@ public class Articles {
     }
 
 
-    public Articles(String articleType, String articleWeek, String articleSession, String articleLink, String articleTitle) {
+    public Articles(String articleType,
+                    String articleWeek,
+                    String articleSession,
+                    String articleLink,
+                    String articleTitle) {
         this.articleType = articleType;
         this.articleWeek = articleWeek;
         this.articleSession = articleSession;
