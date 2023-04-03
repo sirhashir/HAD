@@ -68,12 +68,6 @@ public class Articles {
     private String articleTitle;
 
 
-//    @Column(
-//            name = "article_data",
-//            nullable = false
-//    )
-//    private String articleData;
-
     public Articles() {
     }
 
